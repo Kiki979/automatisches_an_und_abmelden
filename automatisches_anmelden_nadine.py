@@ -122,6 +122,9 @@ try:
             print(f"Fehler beim Klicken von 'Starten': {e}")
             print("Vermutlich bereits angemeldet.")
 
+    # Warte
+    time.sleep(5)
+
     # Login-Zeit auslesen
     try:
         card_text = WebDriverWait(driver, 10).until(
@@ -140,6 +143,8 @@ try:
             send_push_notification("Erfolgreich um: ", login_time)
         else:
             print("Keine Login-Zeit gefunden.")
+            send_push_notification("Erfolgreich angemeldet, aber keine Zeit gefunden")          
+
 
     except TimeoutException:
         print("Fehler: Login-Zeit nicht gefunden.")

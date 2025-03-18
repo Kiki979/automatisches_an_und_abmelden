@@ -91,11 +91,11 @@ try:
         else:
             print("Beenden button is present but not clickable.")
 
-        # Warte
-        time.sleep(5)
-
     except:
         print("Beenden button not found or not clickable.")
+
+    # Warte
+    time.sleep(5)
 
     # Logout-Zeit auslesen
     try:
@@ -118,6 +118,8 @@ try:
             send_push_notification("Erfolgreich um: ", logout_time)          
         else:
             print("Keine Logout-Zeit gefunden.")
+            send_push_notification("Erfolgreich abgemeldet, aber keine Zeit gefunden")          
+
 
     except TimeoutException:
         print("Fehler: Logout-Zeit nicht gefunden.")
