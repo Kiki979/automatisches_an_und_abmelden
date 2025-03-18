@@ -1,0 +1,43 @@
+name: Run Selenium Login Script
+
+on:
+  schedule:
+    - cron: '22 7 * * 1-5' # Montag bis Freitag um 08:22 MEZ
+  workflow_dispatch:
+
+jobs:
+  selenium-login:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install selenium webdriver-manager
+
+      - name: Install Chrome and ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          wget "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          rm chromedriver_linux64.zip
+
+      - name: Run Login Script
+        env:
+          USERMAIL: ${{ secrets.USERMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          TOKEN: ${{ secrets.TOKEN }}
+          USER: ${{ secrets.USER }}
+          PLATTFORM: ${{ secrets.PLATTFORM }}
+        run: python automatisches_anmelden_nadine.py
