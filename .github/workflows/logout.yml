@@ -8,6 +8,7 @@ on:
 jobs:
   selenium-logout:
     runs-on: ubuntu-latest
+    environment: github-actions
 
     steps:
       - name: Checkout repository
