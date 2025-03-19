@@ -2,7 +2,7 @@ name: Run Selenium Logout Script
 
 on:
   schedule:
-    - cron: '35 15 * * 1-5' # Montag bis Freitag um 16:35 MEZ
+    - cron: '35 15 * * 1-5'
   workflow_dispatch:
 
 jobs:
@@ -41,4 +41,4 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
           USER: ${{ secrets.USER }}
           PLATTFORM: ${{ secrets.PLATTFORM }}
-        run: python automatisches_abmelden_nadine.py
+        run: python automatisches_abmelden_nadine.py > selenium_log.txt 2>&1 || cat selenium_log.txt

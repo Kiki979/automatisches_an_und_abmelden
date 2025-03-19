@@ -2,7 +2,7 @@ name: Run Selenium Login Script
 
 on:
   schedule:
-    - cron: '22 7 * * 1-5' # Montag bis Freitag um 08:22 MEZ
+    - cron: '15 7 * * 1-5'
   workflow_dispatch:
 
 jobs:
@@ -41,4 +41,4 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
           USER: ${{ secrets.USER }}
           PLATTFORM: ${{ secrets.PLATTFORM }}
-        run: python automatisches_anmelden_nadine.py
+        run: python automatisches_anmelden_nadine.py > selenium_log.txt 2>&1 || cat selenium_log.txt
