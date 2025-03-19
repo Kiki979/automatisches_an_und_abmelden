@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 # .env-Datei laden
 load_dotenv()
 
-def send_push_notification(message, logout_time):
+def send_push_notification(message, logout_time="Unbekannt"):
     full_message = f"{message} {logout_time}"
 
     conn = http.client.HTTPSConnection("api.pushover.net:443")
@@ -103,6 +103,7 @@ try:
             EC.presence_of_element_located((By.CLASS_NAME, "card-text"))
         )
         text_content = card_text.text
+        print("Inhalt des card-text-Elements:", text_content)
 
         # Regex zur Extraktion der Endzeit (Logout-Zeit)
         match = re.search(r"Endzeit\s*:\s*(\d{2}:\d{2})", text_content)
@@ -111,18 +112,15 @@ try:
             logout_time = match.group(1)
             print(f"Logout-Zeit gefunden: {logout_time}")
 
-            # Aktuelle Zeit im Format HH:MM holen
-            current_time = datetime.now().strftime("%H:%M")
-
-           # Beispielaufruf der Funktion mit einer Nachricht
-            send_push_notification("Erfolgreich um: ", logout_time)          
+            # Push-Nachricht mit Logout-Zeit senden
+            send_push_notification("Erfolgreich um:", logout_time)          
         else:
             print("Keine Logout-Zeit gefunden.")
             send_push_notification("Erfolgreich abgemeldet, aber keine Zeit gefunden")          
 
-
     except TimeoutException:
         print("Fehler: Logout-Zeit nicht gefunden.")
+        send_push_notification("Fehler: Logout-Zeit konnte nicht ermittelt werden")
 
 finally:
     # Browser nach kurzer Wartezeit schließen
