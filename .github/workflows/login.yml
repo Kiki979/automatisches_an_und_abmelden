@@ -1,15 +1,15 @@
 name: Run Selenium Login Script
 
 on:
-  schedule:
-    - cron: '15 7 * * 1-5'
   workflow_dispatch:
+  schedule:
+    - cron: '27-59/10 10 * * 1-5'
 
 jobs:
   selenium-login:
     runs-on: ubuntu-latest
     environment: github-actions
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -36,9 +36,12 @@ jobs:
 
       - name: Run Login Script
         env:
-          USERMAIL: ${{ secrets.USERMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          TOKEN: ${{ secrets.TOKEN }}
-          USER: ${{ secrets.USER }}
-          PLATTFORM: ${{ secrets.PLATTFORM }}
-        run: python automatisches_anmelden_nadine.py > selenium_log.txt 2>&1 || cat selenium_log.txt
+          USERMAIL: ${{ vars.USERMAIL }}
+          PASSWORD: ${{ vars.PASSWORD }}
+          TOKEN: ${{ vars.TOKEN }}
+          USER: ${{ vars.USER }}
+          PLATTFORM: ${{ vars.PLATTFORM }}
+        run: |
+          touch selenium_log.txt
+          python automatisches_anmelden_nadine.py >> selenium_log.txt 2>&1 || true
+          cat selenium_log.txt

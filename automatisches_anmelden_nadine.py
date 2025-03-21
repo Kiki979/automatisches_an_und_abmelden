@@ -49,6 +49,9 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=chrome_options)
+# driver = webdriver.Chrome(service=service)
+
+print("Script gestartet.")
 
 try:
     # Öffne die Webseite
@@ -64,6 +67,8 @@ try:
 
     login_button = driver.find_element(By.ID, 'loginbtn')
     login_button.click()
+
+    print("Login erfolgreich.")
 
     # Warte
     time.sleep(2)
@@ -148,9 +153,12 @@ try:
 
     except TimeoutException:
         print("Fehler: Login-Zeit nicht gefunden.")
+        send_push_notification("Fehler: Logout-Zeit konnte nicht ermittelt werden")
 
 except Exception as e:
     print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
+    send_push_notification("Fehler: Logout-Zeit konnte nicht ermittelt werden")
+
 
 finally:
     # Browser nach kurzer Wartezeit schließen
