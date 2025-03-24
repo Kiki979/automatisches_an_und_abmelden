@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 # .env-Datei laden
 load_dotenv()
 
-def send_push_notification(message, logout_time="Unbekannt"):
+def send_push_notification(message, logout_time=None):
     full_message = f"{message} {logout_time}"
 
     conn = http.client.HTTPSConnection("api.pushover.net:443")

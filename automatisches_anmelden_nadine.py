@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 # .env-Datei laden
 load_dotenv()
 
-def send_push_notification(message, login_time):
+def send_push_notification(message, login_time=None):
     """Sendet eine Push-Nachricht mit der Login-Zeit."""
     full_message = f"{message} {login_time}"
 
