@@ -3,7 +3,7 @@ name: Run Selenium Logout Script
 on:
   workflow_dispatch:
   schedule:
-    - cron: '45 14 * * 1-5'
+    - cron: '20 15 * * 1-5'
 
 jobs:
   selenium-logout:
